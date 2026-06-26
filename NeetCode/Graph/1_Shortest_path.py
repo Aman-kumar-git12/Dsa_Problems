@@ -28,7 +28,7 @@ class Solution:
                 if 0 <= x_shift < n and  0 <= y_shift < n and grid[x_shift][y_shift] == 0  :
                     grid[x_shift][y_shift] = 1 
                     q.append((x_shift , y_shift , dist + 1 ))
-        return -1 
+        return -1  
 
             
 
