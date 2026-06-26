@@ -13,7 +13,7 @@ def bfsOfGraph(n, edges, src):
 
     while q:
         popnode = q.popleft()
-        final.append(popnode)
+        result.append(popnode)
         visited[popnode] = True 
 
         for nei in adjlist[popnode]:
