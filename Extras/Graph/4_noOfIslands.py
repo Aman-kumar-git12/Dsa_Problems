@@ -1,22 +1,68 @@
 
 # Quesiton : Number of Islands (DFS)
 # link : https://my.newtonschool.co/playground/code/1f4m14i57qrj
-def numIslands(grid,n,m):
-    directions = [(0 , 1) , (0 , -1) , (1 , 0) , (-1 , 0)]
 
-    def dfs(row , col):
-        grid[row][col] = 0 
-        for dx , dy in directions:
-            new_row = row + dx 
-            new_col = col + dy
-            if 0 <= new_row < n and 0 <= new_col < m and grid[new_row][new_col] == 1:
-                dfs(new_row , new_col)
+# Recursion 
 
-    count = 0   
+def isSubsetSum (self, arr, sum):
+    def helper(i , sum):
+        
+        if sum == 0 :
+            return  True 
+        if i == 0 : 
+            return False 
 
-    for i in range(len(grid)):
-        for j in range(len(grid[0])):
-            if grid[i][j] == 1:
-                count+=1 
-                dfs(i , j)
-    return count 
+        if arr[i-1] <= sum: 
+            
+            return  helper(i-1 , sum - arr[i-1])  or helper(i-1 , sum )
+        else :
+            return  helper(i-1 , sum )
+            
+    return helper(len(arr) , sum)
+
+
+
+# Memoziation 
+
+def isSubsetSum (self, arr, sum):
+        
+    dp = [[-1] * (sum+ 1) for i in range(len(arr) + 1)]
+    def helper(i , sum):
+        
+        if sum == 0 :
+            return  True 
+        if i == 0 : 
+            return False 
+        
+        if dp[i][sum] != -1:
+            return dp[i][sum]
+        if arr[i-1] <= sum: 
+            
+            dp[i][sum] =  helper(i-1 , sum - arr[i-1])  or helper(i-1 , sum )
+        else :
+            dp[i][sum] =  helper(i-1 , sum )
+            
+        return dp[i][sum]
+        
+    return helper(len(arr) , sum)
+
+
+# Tabulation (Top-down)
+
+for i in range(len(arr) + 1 ):
+    for j in range(sum + 1):
+        if i == 0 and j ==0 :
+            dp[i][j] = True 
+        elif i == 0 :
+            dp[i][j] = False
+        elif j == 0 :
+            dp[i][j] = True 
+            
+for i in range(1 , len(arr) + 1 ):
+    for j in range(1 , sum + 1):
+        if arr[i-1] <= j:
+            dp[i][j] = dp[i-1][j- arr[i-1]] or dp[i-1][j]
+        else:
+            dp[i][j] = dp[i-1][j]
+        
+return dp[len(arr)][sum]
